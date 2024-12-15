@@ -365,98 +365,126 @@
         });
     </script> 
     <!-- End Thông báo giỏ hàng -->
-    <!-- Đăng nhập/Đăng kí -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Đăng Ký</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Tên đăng nhập</label>
-                            <input type="text" class="form-control" id="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                            <input type="password" class="form-control" id="confirmPassword" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Đăng Ký</button>
-                </div>
+     <!-- Đăng nhập/Đăng kí -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Đăng Ký</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="registerButton">Đăng Ký</button>
             </div>
         </div>
     </div>
-    
-    <script>
-        $('#btnDK').click(function() {
-            $('#registerModal').modal('show');
-        });
-        $('.btn-primary').click(function() {
+</div>
+
+<script>
+    $('#btnDK').click(function() {
+        $('#registerModal').modal('show');
+    });
+
+    $('#registerButton').click(function() {
+        var username = $('#username').val();
+        var email = $('#email').val();
         var password = $('#password').val();
         var confirmPassword = $('#confirmPassword').val();
 
+        // Validate inputs
+        if (!username) {
+            alert('Tên đăng nhập không được để trống.');
+            return;
+        }
+        if (!validateEmail(email)) {
+            alert('Email không hợp lệ. Vui lòng nhập lại.');
+            return;
+        }
         if (password !== confirmPassword) {
             alert('Mật khẩu không khớp. Vui lòng kiểm tra lại.');
-        } else {
-            alert('Đăng ký thành công!');
-            $('#registerModal').modal('hide');
+            return;
         }
+        alert('Đăng ký thành công!');
+        $('#registerModal').modal('hide');
     });
-    </script>
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Đăng Nhập</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Đăng Nhập</button>
-                </div>
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    }
+</script>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Đăng Nhập</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="loginButton">Đăng Nhập</button>
             </div>
         </div>
     </div>
-    
-    <script>
-        $('#btnDN').click(function() {
-            $('#loginModal').modal('show');
-        });
-        
-        $('.btn-primary').click(function() {
-            var email = $('#loginEmail').val();
-            var password = $('#loginPassword').val();
-            alert('Đăng nhập thành công!');
-            $('#loginModal').modal('hide');
-        });
-    </script>
-    <!-- end Đăng nhập/Đăng kí -->
+</div>
+
+<script>
+    $('#btnDN').click(function() {
+        $('#loginModal').modal('show');
+    });
+
+    $('#loginButton').click(function() {
+        var email = $('#loginEmail').val();
+        var password = $('#loginPassword').val();
+
+        // Validate inputs
+        if (!validateEmail(email)) {
+            alert('Email không hợp lệ. Vui lòng nhập lại.');
+            return;
+        }
+        if (!password) {
+            alert('Mật khẩu không được để trống.');
+            return;
+        }
+        alert('Đăng nhập thành công!');
+        $('#loginModal').modal('hide');
+    });
+</script>
+<!-- end Đăng nhập/Đăng kí -->
 
 </body>
 </html>
